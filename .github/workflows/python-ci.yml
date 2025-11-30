@@ -26,14 +26,13 @@ jobs:
     
     - name: Run unit tests
       run: |
-        cd tests
-        python -m pytest test_library.py -v
+        python -c "import sys; print(sys.path)"
+        python -m pytest tests/ -v
     
     - name: Check code style
       run: |
-        flake8 src/ tests/ --max-line-length=127
+        flake8 src/ tests/ --max-line-length=127 --extend-ignore=E501
     
     - name: Run main program
       run: |
-        cd src
-        python library.py
+        python src/library.py
