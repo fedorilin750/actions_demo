@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -25,13 +26,14 @@ jobs:
     
     - name: Run unit tests
       run: |
-        python -m pytest tests/ -v
+        cd tests
+        python -m pytest test_library.py -v
     
-    - name: Check code style with flake8
+    - name: Check code style
       run: |
-        flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 src/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 src/ tests/ --max-line-length=127
     
     - name: Run main program
       run: |
-        python src/library.py
+        cd src
+        python library.py
